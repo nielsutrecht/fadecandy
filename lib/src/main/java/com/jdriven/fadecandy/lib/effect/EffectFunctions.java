@@ -69,6 +69,25 @@ public class EffectFunctions {
         };
     }
 
+    public static Function<PixelInfo, Pixel> police(int duration) {
+        return (pi) -> {
+            int time = (int)(System.currentTimeMillis() % duration);
+            Pixel[] pixels = new Pixel[2];
+            if(time < duration / 2) {
+                pixels[0] = Pixel.BLUE;
+                pixels[1] = Pixel.RED;
+            }
+            else {
+                pixels[0] = Pixel.RED;
+                pixels[1] = Pixel.BLUE;
+            }
+
+            pi.pixel.set(pixels[pi.index % 2]);
+
+            return pi.pixel;
+        };
+    }
+
     public static Function<PixelInfo, Pixel> vuMeter(int duration) {
         return (pi) -> {
             double time = (double)(System.currentTimeMillis() % duration) / (double)duration * Math.PI * 2.0;

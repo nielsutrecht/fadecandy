@@ -17,6 +17,7 @@ public class EffectRunnableTest {
     public void testRunnable() throws Exception {
         EffectRunnable runnable = new EffectRunnable(server.channel(0), true);
         runnable
+                .add(EffectFunctions.police(800), 400, 4000)
                 .add(EffectFunctions.kitt(), 100, 10000)
                 .add(EffectFunctions.hueSine(10000), 50, 10000)
                 .add(EffectFunctions.random(), 200, 10000)

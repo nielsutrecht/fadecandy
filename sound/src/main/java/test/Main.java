@@ -1,27 +1,12 @@
-package com.jdriven.fadecandy.lib;
-
-import org.junit.Test;
+package test;
 
 import javax.sound.sampled.*;
-import java.awt.Color;
-import java.util.Random;
-import java.util.function.Function;
-
 /**
  * Created by niels on 6-11-15.
  */
-public class ServerTest {
-    private Random random = new Random();
-    private Server server;
+public class Main {
+    public static void main(String... argv) throws Exception {
 
-    public ServerTest() throws Exception {
-        server = new Server();
-        server.connect();
-        server.createChannel(0, 8);
-    }
-
-    @Test
-    public void testSound() throws Exception {
         AudioFormat format = new AudioFormat(44100, 16, 2, true, true);
 
         DataLine.Info targetInfo = new DataLine.Info(TargetDataLine.class, format);
@@ -52,36 +37,12 @@ public class ServerTest {
 
                 double calculated = (rms - minRms);
 
-                setPixels(calculated / 30.0);
+                System.out.println(calculated);
             }
         }
         catch (Exception e) {
             System.err.println(e);
         }
-    }
-
-    public void setPixels(double value) throws Exception {
-        Function<PixelInfo, Pixel> vuMeter = (pi) -> {
-            int pixels = (int)(pi.length * value);
-
-            pi.pixel.r = 0;
-            pi.pixel.g = 0;
-            pi.pixel.b = 0;
-
-            if(pi.index <= pixels) {
-                if(pi.index >= (int)(pi.length * 0.8)) {
-                    pi.pixel.r = 255;
-                }
-                else {
-                    pi.pixel.g = 255;
-                }
-
-            }
-
-            return pi.pixel;
-        };
-
-        server.channel(0).setPixels(vuMeter).write();
     }
 
     protected static int calculateRMSLevel(byte[] audioData) { // audioData might be buffered data read from a data line
@@ -98,6 +59,4 @@ public class ServerTest {
         double averageMeanSquare = sumMeanSquare / audioData.length;
         return (int)(Math.pow(averageMeanSquare,0.5d) + 0.5);
     }
-
-
 }
