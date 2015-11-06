@@ -33,6 +33,30 @@ public class ServerTest {
         return pi.pixel;
     };
 
+    private Function<PixelInfo, Pixel> sineFunc2 = (pi) -> {
+        double time = (double)(System.currentTimeMillis() % 4000) / 4000.0 * Math.PI * 2.0;
+
+        time = (Math.sin(time) + 1.0) / 2.0;
+
+        int pixels = (int)(pi.length * time);
+
+        pi.pixel.r = 0;
+        pi.pixel.g = 0;
+        pi.pixel.b = 0;
+
+        if(pi.index <= pixels) {
+            if(pi.index >= (int)(pi.length * 0.8)) {
+                pi.pixel.r = 255;
+            }
+            else {
+                pi.pixel.g = 255;
+            }
+
+        }
+
+        return pi.pixel;
+    };
+
     public ServerTest() throws Exception {
         server = new Server();
         server.connect();
@@ -52,12 +76,11 @@ public class ServerTest {
     }
 
     @Test
-    public void testSetPixelsWithBiFunction() throws Exception {
-        final Random random = new Random();
+    public void testSetPixelsWithFunction() throws Exception {
         for(int i = 0;i < 1000;i++) {
-            server.channel(0).setPixels(sineFunc).write();
+            server.channel(0).setPixels(sineFunc2).write();
 
-            Thread.sleep(500);
+            Thread.sleep(100);
         }
     }
 
