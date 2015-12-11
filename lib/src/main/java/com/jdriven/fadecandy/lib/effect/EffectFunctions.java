@@ -119,7 +119,10 @@ public class EffectFunctions {
         final AtomicBoolean direction = new AtomicBoolean(true);
         final AtomicInteger counter = new AtomicInteger(0);
 
+        final int[] distValues = {255, 212, 170, 128, 85, 42};
+
         return (pi) -> {
+
             if(counter.get() >= pi.length) {
                 if(direction.get()) {
                     index.incrementAndGet();
@@ -139,14 +142,11 @@ public class EffectFunctions {
 
             int distance = Math.abs(pi.index - index.get());
 
-            if(distance == 0) {
-                pi.pixel.r = 255;
+            if(distance >= distValues.length) {
+                pi.pixel.r = 0;
             }
-            else if(distance == 1) {
-                pi.pixel.r = 168;
-            }
-            else if(distance == 2) {
-                pi.pixel.r = 84;
+            else {
+                pi.pixel.r = distValues[distance];
             }
 
             counter.incrementAndGet();
