@@ -10,6 +10,7 @@
     <modules>
         <module>lib</module>
         <module>sound</module>
+        <module>tree</module>
     </modules>
 
     <packaging>pom</packaging>

@@ -204,7 +204,7 @@ public class Server {
                 packet[i++] = (byte)p.b;
             }
 
-            LOG.info("Sending {} pixels to channel {}", pixels.length, channel);
+            LOG.debug("Sending {} pixels to channel {}", pixels.length, channel);
             writeData(packet);
         }
     }

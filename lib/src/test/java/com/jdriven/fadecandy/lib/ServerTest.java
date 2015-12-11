@@ -20,7 +20,7 @@ public class ServerTest {
         server.createChannel(0, 8);
     }
 
-    @Test
+
     public void testSound() throws Exception {
         AudioFormat format = new AudioFormat(44100, 16, 2, true, true);
 

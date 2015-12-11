@@ -1,18 +1,23 @@
-package com.jdriven.fadecandy.lib.effect;
+package com.jdriven.xmastree;
 
 import com.jdriven.fadecandy.lib.Server;
-import org.junit.Test;
+import com.jdriven.fadecandy.lib.effect.EffectFunctions;
+import com.jdriven.fadecandy.lib.effect.EffectRunnable;
 
-public class EffectRunnableTest {
+import java.io.IOException;
+
+public class Main {
     private Server server;
-    public EffectRunnableTest() throws Exception {
+    private EffectRunnable runnable;
+
+    public Main() throws IOException {
         server = new Server();
         server.connect();
         server.createChannel(0, 8);
     }
 
-    public void testRunnable() throws Exception {
-        EffectRunnable runnable = new EffectRunnable(server.channel(0), true);
+    public void setup() {
+        runnable = new EffectRunnable(server.channel(0), true);
         runnable
                 .add(EffectFunctions.police(800), 400, 4000)
                 .add(EffectFunctions.kitt(), 100, 10000)
@@ -23,8 +28,15 @@ public class EffectRunnableTest {
                 .add(EffectFunctions.sine(4000, 0, 0, 256), 500, 4000)
                 .add(EffectFunctions.vuMeter(4000), 100, 8000)
                 .add(EffectFunctions.sine(4000, 256, 0, 0), 500, 8000);
+    }
 
-        Thread.sleep(500);
+    public void run() {
         runnable.run();
+    }
+
+    public static void main(String... argv) throws Exception {
+        Main main = new Main();
+        main.setup();
+        main.run();
     }
 }
