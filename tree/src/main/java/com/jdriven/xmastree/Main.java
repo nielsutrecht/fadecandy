@@ -13,7 +13,7 @@ public class Main {
     public Main() throws IOException {
         server = new Server();
         server.connect();
-        server.createChannel(0, 8);
+        server.createChannel(0, 64);
     }
 
     public void setup() {

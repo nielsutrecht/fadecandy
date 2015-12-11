@@ -14,7 +14,7 @@ public class Sound {
     public Sound() throws IOException {
         server = new Server();
         server.connect();
-        server.createChannel(0, 8);
+        server.createChannel(0, 64);
     }
     public static void main(String... argv) throws Exception {
         Sound sound = new Sound();
