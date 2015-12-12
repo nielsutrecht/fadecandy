@@ -5,9 +5,16 @@ import javax.sound.sampled.*;
 
 public class Volume implements Runnable {
 
+    private static final double DEFAULT_DELTA_CUTOFF = 5.0;
     private double current;
     private boolean cont;
+    private double deltaCutoff;
+
     private Averages averages = new Averages(60);
+
+    public Volume() {
+        deltaCutoff = System.getProperty("delta") != null ? Double.parseDouble(System.getProperty("delta")) : DEFAULT_DELTA_CUTOFF;
+    }
 
     @Override
     public void run() {
@@ -42,13 +49,20 @@ public class Volume implements Runnable {
                 min = Math.min(min, rms);
                 max = Math.max(max, rms);
 
+                double delta = max - min;
+
+                System.out.printf("%5.2f | %5.2f | %5.2f | %5.2f | %s\n", rms, min, max, delta, delta < deltaCutoff);
+
                 double calculated = (rms - min);
 
                 current = calculated / (max - min);
-                if(max - min < 5.0) {
+
+
+                if(delta < deltaCutoff) {
                     current = 0.0;
                 }
-                max -= 0.1;
+                max -= (delta / 25.0);
+                //max -= 0.1;
                 Thread.sleep(20);
             }
         }
