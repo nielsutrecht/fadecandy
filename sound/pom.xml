@@ -30,7 +30,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.jdriven.xmastree.Sound</mainClass>
+                            <mainClass>com.jdriven.xmastree.Volume</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

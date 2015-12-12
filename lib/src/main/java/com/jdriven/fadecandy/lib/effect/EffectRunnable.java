@@ -9,11 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-/**
- * Created by niels on 6-11-15.
- */
 public class EffectRunnable implements Runnable {
     private List<Effect> effects;
+    private Effect highPrio;
     private int index;
     private boolean continuous;
     private boolean started;
@@ -38,6 +36,12 @@ public class EffectRunnable implements Runnable {
         return this;
     }
 
+    public EffectRunnable setHighPrio(Effect highPrio) {
+        this.highPrio = highPrio;
+
+        return this;
+    }
+
     public EffectRunnable add(Function<PixelInfo, Pixel> function, int interval, int duration) {
         BasicEffect effect = new BasicEffect(function);
         effect.setInterval(interval);
@@ -58,7 +62,7 @@ public class EffectRunnable implements Runnable {
             long effectStart = System.currentTimeMillis();
             Effect effect = current();
             int effectDuration = effect.getDuration();
-            while(started && (System.currentTimeMillis() - effectStart) < effectDuration) {
+            while(effect.ready() && started && (System.currentTimeMillis() - effectStart) < effectDuration) {
                 try {
                     channel.setPixels(effect.getFunction()).write();
                 }
@@ -84,7 +88,12 @@ public class EffectRunnable implements Runnable {
     }
 
     private Effect current() {
-        return effects.get(index);
+        if(highPrio != null && highPrio.ready()) {
+            return highPrio;
+        }
+        else {
+            return effects.get(index);
+        }
     }
 
 

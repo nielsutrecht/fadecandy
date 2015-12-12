@@ -9,4 +9,8 @@ public interface Effect {
     int getInterval();
     int getDuration();
     Function<PixelInfo, Pixel> getFunction();
+
+    default boolean ready() {
+        return true;
+    }
 }
