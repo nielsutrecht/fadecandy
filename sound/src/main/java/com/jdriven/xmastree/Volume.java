@@ -45,7 +45,7 @@ public class Volume implements Runnable {
                 double calculated = (rms - min);
 
                 current = calculated / (max - min);
-                if(max - min < 2.0) {
+                if(max - min < 5.0) {
                     current = 0.0;
                 }
                 max -= 0.1;

@@ -64,7 +64,14 @@ public class EffectRunnable implements Runnable {
             int effectDuration = effect.getDuration();
             while(effect.ready() && started && (System.currentTimeMillis() - effectStart) < effectDuration) {
                 try {
-                    channel.setPixels(effect.getFunction()).write();
+                    if(highPrio != null && highPrio.ready()) {
+                        channel.setPixels(highPrio.getFunction()).write();
+                        System.out.println("Hi");
+                    }
+                    else {
+                        channel.setPixels(effect.getFunction()).write();
+                        System.out.println("Lo");
+                    }
                 }
                 catch(IOException e) {
                     throw new RuntimeException(e);
@@ -88,12 +95,8 @@ public class EffectRunnable implements Runnable {
     }
 
     private Effect current() {
-        if(highPrio != null && highPrio.ready()) {
-            return highPrio;
-        }
-        else {
-            return effects.get(index);
-        }
+        return effects.get(index);
+
     }
 
 
