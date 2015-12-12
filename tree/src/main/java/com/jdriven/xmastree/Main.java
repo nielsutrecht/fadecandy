@@ -29,7 +29,7 @@ public class Main {
                 .add(EffectFunctions.vuMeter(4000), 100, 8000)
                 .add(EffectFunctions.sine(4000, 256, 0, 0), 500, 8000);
 
-        runnable.setHighPrio(new SoundEffect(SoundEffect.Effect.VU_METER));
+        //runnable.setHighPrio(new SoundEffect(SoundEffect.Effect.VU_METER));
     }
 
     public void run() {
