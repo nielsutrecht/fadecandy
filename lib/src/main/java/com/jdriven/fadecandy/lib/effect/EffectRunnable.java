@@ -66,11 +66,9 @@ public class EffectRunnable implements Runnable {
                 try {
                     if(highPrio != null && highPrio.ready()) {
                         channel.setPixels(highPrio.getFunction()).write();
-                        System.out.println("Hi");
                     }
                     else {
                         channel.setPixels(effect.getFunction()).write();
-                        System.out.println("Lo");
                     }
                 }
                 catch(IOException e) {
