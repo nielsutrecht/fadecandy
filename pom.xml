@@ -9,9 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>lib</module>
-        <module>sound</module>
         <module>tree</module>
-        <module>playsongs</module>
     </modules>
 
     <packaging>pom</packaging>
